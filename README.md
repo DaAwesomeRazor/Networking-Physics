@@ -42,7 +42,7 @@ function tickServer() {
     
         //Apply all stores/unprocessed inputs(move player)
         for (var i = 0;i < player.inputs;i++) {
-            player.applyInput(player.inputs[i], delta / player.inputs)
+            player.applyInput(player.inputs[i], delta / player.inputs.length)
         }
         player.inputs = [];
     }

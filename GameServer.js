@@ -54,8 +54,8 @@ class Server {
 
 	static tick() {
 		
-		this.player.tick();
-		ServerPhysics.tick(this.physicsDelta);
+		//this.player.tick();
+		ServerPhysics.tick(50, 1);
 		
 		//Log the players position
 		if (log) {
@@ -66,7 +66,8 @@ class Server {
 
 	static receiveInput(action) {
 		//Send the inputs to the player to push to an array of inputs
-		this.player.processInput(action);
+		this.player.move(action, action.delta);
+		//this.player.processInput(action);
 	}
 }
 

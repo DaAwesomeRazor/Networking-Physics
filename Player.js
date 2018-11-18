@@ -60,12 +60,16 @@ class Player {
 	tick() {
 		//Every tick loop through the inputs and apply them
 		//Do delta / inputs.length(not sure if that is correct)
-		this.inputs.forEach(action => {
-			this.move(action, action.delta / this.inputs.length);
-		});
-
+		
+		if (this.inputs.length < 3) return;
+		
+		for (var i = 0;i < 3;i++) {
+			this.move(this.inputs[i], this.inputs[i].delta);
+			
+		}
+		this.inputs.splice(0, 3);
 		//fancy way of clearing the inputs
-		this.inputs.length = 0;
+		//this.inputs.length = 0;
 		
 	}
 

@@ -86,3 +86,5 @@ SERVER 47.544 -732.672 -232.633
 
 As you can see after the inputs are processed the positions are matched up completley(except for the y which makes sense since the server is behind and the player is constantly falling)
 
+however, this wouldnt work as it ticks the physics after every input received which would not work with multiple players.
+

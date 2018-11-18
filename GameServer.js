@@ -1,3 +1,11 @@
+/**
+ This code is meant to simulate how the client and server would interact.
+ 
+ I put it in one file to see if I can get the prediction part matching correctley
+
+**/
+
+
 global.performance = require('perf_hooks').performance;
 global.Ammo = require('ammo.js')();
 
@@ -45,6 +53,8 @@ class Server {
 	}
 
 	static tick() {
+		
+		
 		//Log the players position
 		if (log) {
 			const pos = ServerPhysics.getPosition(this.player.body);
@@ -52,11 +62,9 @@ class Server {
 		}
 	}
 
-	static receiveInput(action, delta) {
-		//Moves the player with the clients delta as soon as a message is received
-		this.player.move(action, delta);
-		//Ticks the server physics world as soon as the message is received
-		ServerPhysics.tick(delta, 1);
+	static receiveInput(action) {
+		//Send the inputs to the player to push to an array of inputs
+		this.player.processInput(action);
 	}
 }
 
@@ -137,7 +145,7 @@ class Client {
 		
 		// Account for 150ms latency
 		setTimeout(() => {
-			Server.receiveInput(action, delta);
+			Server.receiveInput(action);
 		}, 150);
 	}
 }

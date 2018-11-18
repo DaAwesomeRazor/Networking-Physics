@@ -21,7 +21,6 @@ class Player {
 		this.physics = physics;
 		this.spawn({});
 
-		// setupNoSync(this);
 	}
 
 	onCollide(point) {
@@ -32,15 +31,6 @@ class Player {
 			this.onGround = true;
 		}
 
-		// else if (dot <= 0.2 && dot >= -0.2) {
-		// if (object.name.toLowerCase().includes('ladder')) {
-		// 	this.tmpVec.setValue(0, 45 - this.this.physicsBody.getLinearVelocity().y(), 0);
-		// 	this.this.physicsBody.applyImpulse(this.tmpVec);
-		// 	Controls.action.onLadder = true;
-		// } else {
-		// 	Controls.action.onLadder = false;
-		// }
-		// }
 	}
 
 	createBody() {
@@ -62,15 +52,16 @@ class Player {
 		this.body.setFriction(0);
 	}
 
-	processInput({ action, rotation }) {
-		//this.rotation = rotation;
-
+	processInput(action) {
+		//Push the input to an array
 		this.inputs.push(action);
 	}
 
 	tick(delta) {
-		const now = performance.now();
-		console.log("LENGTH:" + this.inputs.length)
+		/** delta argument is not used **/
+		
+		//Every tick loop through the inputs and apply them
+		//Do delta / inputs.length(not sure if that is correct)
 		this.inputs.forEach(action => {
 			this.move(action, action.delta / this.inputs.length);
 		});
@@ -110,10 +101,6 @@ class Player {
 
 		tmpVec.setValue(this.inputVelocity.x, this.inputVelocity.y, this.inputVelocity.z);
 		this.body.applyImpulse(tmpVec);
-
-		// const velocity = this.body.getLinearVelocity();
-
-		// this.velocity = { x: velocity.x(), y: velocity.y(), z: velocity.z() };
 	}
 
 	spawn(data) {
@@ -122,12 +109,6 @@ class Player {
 
 		this.createBody();
 	}
-}
-
-function setupNoSync(player) {
-	// Colyseus.nosync(player, 'inputVelocity');
-	// Colyseus.nosync(player, 'direction');
-	//Colyseus.nosync(player, 'body');
 }
 
 function setDefaults(player) {

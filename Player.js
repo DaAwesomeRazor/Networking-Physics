@@ -57,9 +57,7 @@ class Player {
 		this.inputs.push(action);
 	}
 
-	tick(delta) {
-		/** delta argument is not used **/
-		
+	tick() {
 		//Every tick loop through the inputs and apply them
 		//Do delta / inputs.length(not sure if that is correct)
 		this.inputs.forEach(action => {

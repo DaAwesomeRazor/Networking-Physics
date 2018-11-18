@@ -54,6 +54,8 @@ class Server {
 
 	static tick() {
 		
+		this.player.tick();
+		ServerPhysics.tick(this.physicsDelta);
 		
 		//Log the players position
 		if (log) {

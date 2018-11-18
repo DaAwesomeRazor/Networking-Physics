@@ -45,6 +45,9 @@ class Server {
 	}
 
 	static tick() {
+		//Ticks the server physics world with 1000/20
+		ServerPhysics.tick(this.physicsDelta, 1);
+
 		//Log the players position
 		if (log) {
 			const pos = ServerPhysics.getPosition(this.player.body);
@@ -55,8 +58,6 @@ class Server {
 	static receiveInput(action) {
 		//Moves the player with the clients delta as soon as a message is received
 		this.player.move(action, action.delta);
-		//Ticks the server physics world as soon as the message is received
-		ServerPhysics.tick(action.delta, 1);
 	}
 }
 

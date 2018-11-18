@@ -36,55 +36,29 @@ setInterval(tick, 1000 / 60); //60 tps
 var players = {}
 function tickServer() {
     const delta = 1000 / 20;
-    
-    //loop through all players
-    for (const player in players) {
-    
-        //Apply all stores/unprocessed inputs(move player)
-        for (var i = 0;i < player.inputs;i++) {
-            player.applyInput(player.inputs[i], delta / player.inputs.length)
-        }
-        player.inputs = [];
-    }
-    //Tick Server Physics
     Physics.tick(delta)
 }
 
 function onmessage(playerId, input) {
-    var player = this.players[playerId];
-    if (!player) this.players[playerId] = [];
-    
-    //store the inputs to apply on tick
-    this.players[playerId].push(input);
+    const player = getPlayer(playerId);
+    player.applyInput(input, input.delta)
 }
 setInterval(tick, 1000 / 20); //20 tps
 ```
 #### The Problem
-When I try this code, after all the inputs are processed he final positions are very different
+When I try this code, the positions are very different
 ```
-SERVER 16.362 -635.418 -78.911
-CLIENT 47.701 -657.194 -233.892
+CLIENT 47.701 -657.194 -222.432
+CLIENT 48.321 -658.144 -233.892
 ```
 
-### How I match up the positions and why it wont work
-I noticed that if I **move and tick the server physics** as soon as I *receive a message* the positions will match up perfectley. I showed this in [GameServer_Working.js](GameServer_Working.js), where I do
+### The positions match up when I disable the ingame map
 
-```javascript
-//Receive input is when I receive a message from the client
-static receiveInput(action) {
-	//Moves the player with the clients delta as soon as a message is received
-	this.player.move(action, action.delta);
-	//Ticks the server physics world as soon as the message is received
-	ServerPhysics.tick(action.delta, 1);
-}
-```
+I noticed when I comment out the code for the ingame map(which is equivalent to disabling collisions), the positions match up perfectley
+after all inputs are processed. I did this in [GameServer_Working.js](GameServer_Working.js)
+
 The output for that code is
 ```
-CLIENT 47.544 -742.495 -232.633
-SERVER 47.544 -732.672 -232.633
+SERVER 54.842 -701.546 -265.926
+CLIENT 54.842 -765.695 -265.926
 ```
-
-As you can see after the inputs are processed the positions are matched up completley(except for the y which makes sense since the server is behind and the player is constantly falling)
-
-however, this wouldnt work as it ticks the physics after every input received which would not work with multiple players.
-

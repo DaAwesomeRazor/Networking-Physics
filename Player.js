@@ -64,6 +64,7 @@ class Player {
 			this.move(action, action.delta / this.inputs.length);
 		});
 
+		//fancy way of clearing the inputs
 		this.inputs.length = 0;
 		
 	}

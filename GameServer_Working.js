@@ -16,7 +16,7 @@ const map = MapLoader.get('default');
 const tmpVec = new Ammo.btVector3();
 
 //Load in the map for the physics world
-
+/*
 map.forEach(triangle => {
 	ServerPhysics.addTriangleMesh({
 		scale: { x: 5, y: 5, z: 5 },
@@ -29,7 +29,7 @@ map.forEach(triangle => {
 		triangles: triangle,
 		mass: 0
 	});
-});
+});*/
 
 const log = true
 
